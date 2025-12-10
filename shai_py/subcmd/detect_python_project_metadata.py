@@ -5,11 +5,14 @@ from ..py_project import PyProjectMetadata
 
 def main() -> PyProjectMetadata:
     """
-    Detect and display Python project metadata from pyproject.toml.
+    Display Python project metadata from pyproject.toml.
 
-    Outputs project name, version, Python version, and key absolute paths including
-    virtual environment (.venv/bin/python, .venv/bin/pip), source directory,
-    and test directory.
+    Outputs project name, version, Python version, and key absolute paths
+    (virtualenv, source directory, test directory).
+
+    Usage::
+
+        shai-py project-info
     """
     py_project_metadata = PyProjectMetadata.new()
     py_project_metadata.print()

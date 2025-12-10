@@ -82,12 +82,14 @@ def calculate_test_file_path(
 
 def main(source_file: str) -> str:
     """
-    Locate the corresponding test file for a Python source file.
+    Get the test file path for a Python source file.
 
-    Maps source path to test path by stripping the package name and joining
-    remaining path components with underscores:
+    Maps source to test by stripping package name and joining path parts:
+    ``my_pkg/a/b/c.py`` -> ``tests/a/b/test_a_b_c.py``
 
-        my_pkg/a/b/c.py -> tests/a/b/test_a_b_c.py
+    Usage::
+
+        shai-py test-path --source-file /path/to/my_pkg/a/b/c.py
 
     :param source_file: Absolute path to the Python source file.
     """

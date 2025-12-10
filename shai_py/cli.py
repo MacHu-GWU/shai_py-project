@@ -13,20 +13,18 @@ class Cli:
     and other automation tasks following Sanhe's Python conventions.
     """
 
-    def detect_python_project_metadata(self):
-        return shai_py.subcmd.detect_python_project_metadata.main()
+    def project_info(self):
+        shai_py.subcmd.detect_python_project_metadata.main()
 
-    detect_python_project_metadata.__doc__ = (
-        shai_py.subcmd.detect_python_project_metadata.__doc__
-    )
+    project_info.__doc__ = shai_py.subcmd.detect_python_project_metadata.main.__doc__
 
-    def locate_test_file(
+    def test_path(
         self,
         source_file: str,
     ):
-        return shai_py.subcmd.locate_test_file.main(source_file)
+        shai_py.subcmd.locate_test_file.main(source_file)
 
-    locate_test_file.__doc__ = shai_py.subcmd.locate_test_file.__doc__
+    test_path.__doc__ = shai_py.subcmd.locate_test_file.main.__doc__
 
 
 def run():
