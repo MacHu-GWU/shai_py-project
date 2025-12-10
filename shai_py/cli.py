@@ -6,6 +6,13 @@ import shai_py.subcmd.locate_test_file
 
 
 class Cli:
+    """
+    CLI tools for Sanhe-styled Python project development workflows.
+
+    Provides utilities for project introspection, test file location,
+    and other automation tasks following Sanhe's Python conventions.
+    """
+
     def detect_python_project_metadata(self):
         return shai_py.subcmd.detect_python_project_metadata.main()
 

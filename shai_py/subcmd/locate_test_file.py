@@ -82,10 +82,12 @@ def calculate_test_file_path(
 
 def main(source_file: str) -> str:
     """
-    Locate the test file path for a given Python source file.
+    Locate the corresponding test file for a Python source file.
 
-    This command calculates where a test file should be placed following
-    the naming convention: tests/<subpackage>/test_<subpackage>_<module>.py
+    Maps source path to test path by stripping the package name and joining
+    remaining path components with underscores:
+
+        my_pkg/a/b/c.py -> tests/a/b/test_a_b_c.py
 
     :param source_file: Absolute path to the Python source file.
     """
