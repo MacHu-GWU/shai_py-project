@@ -50,7 +50,9 @@ Welcome to ``shai_py`` Documentation
 .. image:: https://shai-py.readthedocs.io/en/latest/_static/shai_py-logo.png
     :target: https://shai-py.readthedocs.io/en/latest/
 
-Documentation for ``shai_py``.
+In the AI-driven development era, tools must be designed for machine consumption first. ``shai-py`` (Sanhe AI Python tools) embraces this philosophy by packaging Python development utilities as a CLI-first library, making it effortless for AI agents like Claude Code to invoke sophisticated workflows. Instead of writing one-off scripts scattered across agent skills, we consolidate battle-tested logic into a versioned Python package that AI can invoke with a single uvx command—no installation, no environment pollution, just instant execution.
+
+This approach solves the fundamental challenge of AI tool integration: how to provide powerful, testable, and maintainable utilities without cluttering agent contexts with implementation details. By exposing functionality through clean CLI interfaces (``uvx shai-py detect-metadata``, ``uvx shai-py locate-test``), AI agents can focus on orchestration while developers maintain business logic in a single, version-controlled codebase. The result is elegant, reproducible, and scales beautifully from simple project introspection to complex development automation.
 
 
 .. _install:
