@@ -55,6 +55,29 @@ In the AI-driven development era, tools must be designed for machine consumption
 This approach solves the fundamental challenge of AI tool integration: how to provide powerful, testable, and maintainable utilities without cluttering agent contexts with implementation details. By exposing functionality through clean CLI interfaces (``uvx shai-py detect-metadata``, ``uvx shai-py locate-test``), AI agents can focus on orchestration while developers maintain business logic in a single, version-controlled codebase. The result is elegant, reproducible, and scales beautifully from simple project introspection to complex development automation.
 
 
+Architecture: Subcommand Design Pattern
+------------------------------------------------------------------------------
+This project uses a **Subcommand Delegation Pattern** that cleanly separates business logic from CLI interface, enabling independent testing and maintainability.
+
+**Key Components:**
+
+1. **Subcommand Modules** (``shai_py/subcmd/<subcommand>.py``): Each module implements a single CLI subcommand. The module must define a ``main()`` function containing all business logic. The module-level ``__doc__`` string serves as CLI help text.
+2. **CLI Aggregator** (``shai_py/cli.py``): The ``Cli`` class exposes each subcommand as a method that delegates to the corresponding module's ``main()`` function. Method docstrings are inherited from the subcommand module's ``__doc__``.
+3. **Test Files** (``tests/subcmd/test_subcmd_<subcommand>.py``): Tests import and invoke the ``main()`` function directly, enabling unit testing without CLI overhead.
+
+**Pattern Benefits:**
+
+- Business logic is testable without CLI framework involvement
+- Documentation lives with implementation (single source of truth)
+- Adding new subcommands requires only: create module with ``main()``, add method to ``Cli`` class
+
+**Reference Implementation:**
+
+- Subcommand: ``shai_py/subcmd/detect_python_project_metadata.py`` (see ``main()`` function)
+- CLI integration: ``shai_py/cli.py`` (see ``Cli.detect_python_project_metadata()`` method)
+- Test example: ``tests/subcmd/test_subcmd_detect_python_project_metadata.py``
+
+
 .. _install:
 
 Install
