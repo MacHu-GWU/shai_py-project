@@ -15,6 +15,13 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
-0.1.1 (1970-01-01)
+0.1.1 (2025-12-10)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- First release
+**Features and Improvements**
+
+- Add ``shai-py project-info`` command: display Python project metadata (values and paths) from ``pyproject.toml``.
+- Add ``shai-py test-path`` command: get the corresponding test file path for a given Python source file.
+
+**Miscellaneous**
+
+- Document the Subcommand Delegation Pattern in README for contributors.
