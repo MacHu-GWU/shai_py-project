@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -23,25 +22,8 @@ This is useful for:
 - Build tools that generate test files in the correct location
 - Pre-commit hooks that validate tests exist for changed source files
 - Development workflows that automate test file creation
-
-Examples:
-
-    Given source file:
-    /Users/dev/project/learn_claude_code/math/operations/calculator.py
-
-    The script outputs:
-    /Users/dev/project/tests/math/operations/test_math_operations_calculator.py
-
-    Another example:
-    Given source file:
-    /Users/dev/project/learn_claude_code/utils/helpers.py
-
-    The script outputs:
-    /Users/dev/project/tests/utils/test_utils_helpers.py
 """
 
-import argparse
-import sys
 from pathlib import Path
 
 from ..py_project import locate_pyproject_toml
@@ -58,18 +40,15 @@ def calculate_test_file_path(
         tests/<subpackage>/test_<subpackage>_<module>.py
 
     For example:
-        Source: learn_claude_code/math/operations/calculator.py
+        Source: my_package/math/operations/calculator.py
         Test:   tests/math/operations/test_math_operations_calculator.py
 
-    Args:
-        source_file_path: Absolute path to the source file
-        project_root: Absolute path to the project root
+    :param source_file_path: Absolute path to the source file.
+    :param project_root: Absolute path to the project root.
 
-    Returns:
-        Absolute path where the test file should be located
+    :return: Absolute path where the test file should be located.
 
-    Raises:
-        ValueError: If source file is not within the project
+    :raises ValueError: If source file is not within the project.
     """
     # Get relative path from project root
     try:
@@ -101,77 +80,27 @@ def calculate_test_file_path(
     return test_dir / test_filename
 
 
-def main():
-    """Main entry point."""
-    parser = argparse.ArgumentParser(
-        description="Calculate test file path for a given Python source file",
-        epilog="""
-Examples:
-  %(prog)s /path/to/project/learn_claude_code/math/calculator.py
-    → /path/to/project/tests/math/test_math_calculator.py
+def main(source_file: str) -> str:
+    """
+    Locate the test file path for a given Python source file.
 
-  %(prog)s /path/to/project/learn_claude_code/math/operations/calculator.py
-    → /path/to/project/tests/math/operations/test_math_operations_calculator.py
+    This command calculates where a test file should be placed following
+    the naming convention: tests/<subpackage>/test_<subpackage>_<module>.py
 
-This script is useful for:
-  • IDE integrations (jump from source to test)
-  • Pre-commit hooks (verify tests exist)
-  • Build tools (generate test files)
-  • Development workflows
-        """,
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-    )
-
-    parser.add_argument(
-        "source_file",
-        type=str,
-        help="Absolute path to the Python source file",
-    )
-
-    parser.add_argument(
-        "--verbose",
-        "-v",
-        action="store_true",
-        help="Show detailed information about the calculation",
-    )
-
-    args = parser.parse_args()
-
-    # Convert to Path
-    source_path = Path(args.source_file)
-
-    # Don't check existence of source file for flexibility, this function
-    # is just to calculate the test path.
+    :param source_file: Absolute path to the Python source file.
+    """
+    source_path = Path(source_file)
 
     # Find project root
     pyproject = locate_pyproject_toml(source_path.parent)
     if not pyproject:
-        print(
-            "Error: Could not locate pyproject.toml (project root not found)",
-            file=sys.stderr,
+        raise FileNotFoundError(
+            "Could not locate pyproject.toml (project root not found)"
         )
-        sys.exit(1)
 
     project_root = pyproject.parent
 
-    # Calculate test file path
-    try:
-        test_path = calculate_test_file_path(source_path, project_root)
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
-
-    # Output results
-    if args.verbose:
-        print(f"Project root:     {project_root}")
-        print(f"Source file:      {source_path}")
-        rel_source = source_path.relative_to(project_root)
-        print(f"Relative source:  {rel_source}")
-        print(f"Test file:        {test_path}")
-    else:
-        # Just print the test path
-        print(test_path)
-
-
-if __name__ == "__main__":
-    main()
+    # Calculate and print test file path
+    test_path = calculate_test_file_path(source_path, project_root)
+    print(test_path)
+    return test_path

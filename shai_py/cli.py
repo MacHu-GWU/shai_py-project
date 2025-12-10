@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import typing as T
-
 import fire
 import shai_py.subcmd.detect_python_project_metadata
+import shai_py.subcmd.locate_test_file
 
 
 class Cli:
@@ -13,6 +12,14 @@ class Cli:
     detect_python_project_metadata.__doc__ = (
         shai_py.subcmd.detect_python_project_metadata.__doc__
     )
+
+    def locate_test_file(
+        self,
+        source_file: str,
+    ):
+        return shai_py.subcmd.locate_test_file.main(source_file)
+
+    locate_test_file.__doc__ = shai_py.subcmd.locate_test_file.__doc__
 
 
 def run():
